@@ -24,7 +24,7 @@ namespace Pong.Services.DataContainer
         private void Start()
         {
             //setting up private dictionaries
-            audioDataDictionary = pongAudioDataContainerSO.AudioData;
+            audioDataDictionary = pongAudioDataContainerSO.AudioData as AudioDataDictionary;
         }
 
         #endregion

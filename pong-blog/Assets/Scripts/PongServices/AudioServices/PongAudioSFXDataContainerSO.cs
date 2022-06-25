@@ -23,7 +23,7 @@ namespace Pong.Services.AudioServices
         {
             get
             {
-                return (AudioDataDictionary)PongUtility.ListToDictionary(AudioKeyList, AudioClipList);
+                return PongUtility.ListToDictionary(AudioKeyList, AudioClipList) as AudioDataDictionary;
             }
         }
         
