@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: AudioDataContainer
   m_EditorClassIdentifier: 
   DefaultClip: {fileID: 0}
-  AudioKeyList: 
-  AudioClipList: []
+  AudioKeyList: 000000000100000002000000
+  AudioClipList:
+  - {fileID: 8300000, guid: 25f7d3df3bb285046ba38bfb2af89be1, type: 3}
+  - {fileID: 8300000, guid: 6b2a710a78d900340a127113cd68a02b, type: 3}
+  - {fileID: 8300000, guid: c117c057f01b3ab4986ea7d0cd09e026, type: 3}

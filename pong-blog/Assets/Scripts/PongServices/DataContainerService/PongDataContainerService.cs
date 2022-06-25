@@ -15,7 +15,7 @@ namespace Pong.Services.DataContainer
 
         #region Private Dictionaries
 
-        private AudioDataDictionary audioDataDictionary;
+        private Dictionary<AudioClipSFX_key, AudioClip> audioDataDictionary;
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace Pong.Services.DataContainer
         private void Start()
         {
             //setting up private dictionaries
-            audioDataDictionary = pongAudioDataContainerSO.AudioData as AudioDataDictionary;
+            audioDataDictionary = pongAudioDataContainerSO.AudioData;
         }
 
         #endregion

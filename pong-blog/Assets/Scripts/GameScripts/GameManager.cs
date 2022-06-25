@@ -14,10 +14,47 @@ namespace Pong.Game.Managers
         [SerializeField]
         BallAndGoalSystem ballAndGoalSystem;
 
-        private void Start()
+        [SerializeField]
+        PongUISystem pongUISystem;
+
+
+        private int leftScore;
+        private int rightScore;
+
+        private void OnEnable()
         {
-            
+            ballAndGoalSystem.OnLeftGoal += OnPongGoal;
+            ballAndGoalSystem.OnLeftGoal += UpdateRightScore;
+
+            ballAndGoalSystem.OnRightGoal += OnPongGoal;
+            ballAndGoalSystem.OnRightGoal += UpdateLeftScore;
+
         }
+        private void OnDisable()
+        {
+            ballAndGoalSystem.OnLeftGoal -= OnPongGoal;
+            ballAndGoalSystem.OnLeftGoal -= UpdateRightScore;
+
+            ballAndGoalSystem.OnRightGoal -= OnPongGoal;
+            ballAndGoalSystem.OnRightGoal -= UpdateLeftScore;
+        }
+
+        private void OnPongGoal()
+        {
+            ballAndGoalSystem.ResetAndStart();
+        }
+        private void UpdateLeftScore()
+        {
+            leftScore++;
+            pongUISystem.UpdateScore(leftScore, rightScore);
+        }
+        private void UpdateRightScore()
+        {
+            rightScore++;
+            pongUISystem.UpdateScore(leftScore, rightScore);
+        }
+
+
     }
 }
 

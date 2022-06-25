@@ -12,7 +12,7 @@ namespace Pong.Game.Systems
     public class BallAndGoalSystem : MonoBehaviour
     {
         [SerializeField]
-        private GameObject pongBall;
+        private PongBallGO pongBallGO;
         private PongBallCommandsInvoker pongBallCommandInvoker;
         [Space]
         [SerializeField]
@@ -20,35 +20,46 @@ namespace Pong.Game.Systems
         [SerializeField]
         private PongGoalGO RightGoalWall;
 
-        public Action OnLeftSideGoal;
-        public Action OnRightSideGoal;
+        public Action OnLeftGoal;
+        public Action OnRightGoal;
 
-
-        void Start()
+        private void Awake()
         {
-            pongBallCommandInvoker = new(pongBall);
-            LeftGoalWall.OnPongBallCollision += OnLeftWallBallColision;
-            RightGoalWall.OnPongBallCollision += OnRigtWallBallColision;
+            pongBallCommandInvoker = new(pongBallGO);
+        }
+        private void OnEnable()
+        {
+            pongBallGO.OnPongBallCollisionEnter2D += OnBallCollisionEnter2D;
         }
         private void OnDisable()
         {
-            LeftGoalWall.OnPongBallCollision -= OnLeftWallBallColision;
-            RightGoalWall.OnPongBallCollision -= OnRigtWallBallColision;
+            pongBallGO.OnPongBallCollisionEnter2D -= OnBallCollisionEnter2D;
         }
 
-
-        private void OnLeftWallBallColision()
+        private void OnBallCollisionEnter2D(Collision2D collision)
         {
-            pongBallCommandInvoker.InvokePongBallLeftStartDirection();
-
-            OnLeftSideGoal?.Invoke();
+            if (GameObject.ReferenceEquals(collision.gameObject, LeftGoalWall.gameObject))
+            {
+                pongBallCommandInvoker.InvokePongBallRightStartDirection();
+                OnLeftGoal?.Invoke();
+            }
+            else if (GameObject.ReferenceEquals(collision.gameObject, RightGoalWall.gameObject))
+            {
+                pongBallCommandInvoker.InvokePongBallLeftStartDirection();
+                OnRightGoal?.Invoke();
+            }
         }
-        private void OnRigtWallBallColision()
+
+        public void ResetAndStart()
         {
-            pongBallCommandInvoker.InvokePongBallRightStartDirection();
-
-            OnRightSideGoal?.Invoke();
+            pongBallCommandInvoker.InvokePongStartMovement();
         }
+
+        public void Reset()
+        {
+            pongBallCommandInvoker.InvokePongBallReset();
+        }
+
     }
 
 }

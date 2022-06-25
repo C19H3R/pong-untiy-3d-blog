@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 using Pong.Services;
 using Pong.Services.AudioServices;
 
 namespace Pong.Game.GameObjects
 {
-    [RequireComponent(typeof(BoxCollider2D))]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class PongBallGO : MonoBehaviour
     {
         [SerializeField]
-        Rigidbody2D rigidbody2D;
+        new Rigidbody2D rigidbody2D;
         [SerializeField]
         float startSpeed = 1f;
         [Range(0f, 0.5f)]
@@ -19,11 +21,11 @@ namespace Pong.Game.GameObjects
         [Tooltip("this value adds up every pad collision")]
         float buildUpRate=1f;
 
+        public Action<Collision2D> OnPongBallCollisionEnter2D;
 
         private bool  toLeft = false;
         private Vector2 currentMovementDir = Vector2.zero;
-        private float horizontalSpeed;
-
+        private float currentSpeed;
 
         PongAudioPlayerService audioPlayer;
 
@@ -37,22 +39,21 @@ namespace Pong.Game.GameObjects
         public void OnCollisionEnter2D(Collision2D collision)
         {
             GameObject collidingGO = collision.gameObject;
-
-
             if (collidingGO.CompareTag("PongPaddle"))
             {
-                //flip horizontally on collision with a paddle
                 FlipMovementHorizontally();
-                //accelerate on collision with paddle
-                Accelerate();
             }
             else
             {
                 FlipMovementBasedOnContactNormal(collision.contacts[0].normal);
             }
 
+
+
             if (collidingGO.CompareTag("PongPaddle"))
             {
+                Accelerate();
+
                 audioPlayer.PlaySFX(AudioClipSFX_key.SFX_01_BallHitPaddle);
             }
             else if (collidingGO.CompareTag("PongGoal"))
@@ -63,8 +64,9 @@ namespace Pong.Game.GameObjects
             {
                 audioPlayer.PlaySFX(AudioClipSFX_key.SFX_02_BallHitWall);
             }
-
             UpdateVelocity();
+
+            OnPongBallCollisionEnter2D?.Invoke(collision);
         }
 
         
@@ -85,14 +87,14 @@ namespace Pong.Game.GameObjects
 
         private void UpdateVelocity()
         {
-            rigidbody2D.velocity = currentMovementDir.normalized*startSpeed;
+           rigidbody2D.velocity = currentMovementDir.normalized * currentSpeed;
         }
         /// <summary>
         /// to acceletate the speed of the pong ball
         /// </summary>
         private void Accelerate()
         {
-            rigidbody2D.velocity += rigidbody2D.velocity.normalized*buildUpRate;
+            currentSpeed += buildUpRate;
         }
 
         /// <summary>
@@ -101,8 +103,9 @@ namespace Pong.Game.GameObjects
         [ContextMenu("Reset Pong Ball")]
         public void ResetPosition()
         {
-            horizontalSpeed = 0;
+            rigidbody2D.velocity = Vector2.zero;
             transform.position = Vector3.zero;
+            currentMovementDir = Vector2.zero;
         }
 
         /// <summary>
@@ -114,17 +117,15 @@ namespace Pong.Game.GameObjects
         {
             ResetPosition();
 
-            currentMovementDir = Random.onUnitSphere.normalized;
+            currentMovementDir = UnityEngine.Random.onUnitSphere.normalized;
             currentMovementDir.Normalize();
 
-            horizontalSpeed = startSpeed;
+            currentSpeed = startSpeed;
 
             if(toLeft)
             currentMovementDir.x = 1;
             else
-            {
-                currentMovementDir.x = -1;
-            }
+            currentMovementDir.x = -1;
 
             UpdateVelocity();
         }

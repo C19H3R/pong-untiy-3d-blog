@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 
 //namespaces
 using Pong.Game.Interfaces;
@@ -10,36 +12,23 @@ namespace Pong.Game.GameObjects.Commands
     public class PongBallCommandsInvoker
     {
 
-        private IPongCommand pongBallResetCommand;
-        private IPongCommand pongBallStartMovementCommand;
-        private IPongCommand pongBallLeftStartDirectionCommand;
-        private IPongCommand pongBallRightStartDirectionCommand;
+        private readonly IPongCommand pongBallResetCommand;
+        private readonly IPongCommand pongBallStartMovementCommand;
+        private readonly IPongCommand pongBallLeftStartDirectionCommand;
+        private readonly IPongCommand pongBallRightStartDirectionCommand;
 
 
-        public PongBallCommandsInvoker(GameObject pongBall)
+        public PongBallCommandsInvoker(PongBallGO pongBallGO)
         {
-            PongBallGO pongBallGO;
-
-
-            //Check For PongBallGoComponent 
-
-            if (pongBall.GetComponent<PongBallGO>())
-            {
-                pongBallGO = pongBall.GetComponent<PongBallGO>();
-            }
-            else
-            {
-                throw new System.Exception("PongBallGO Component not found in Game Object");
-            }
-
             pongBallResetCommand = new PongBallResetCommand(pongBallGO);
             pongBallStartMovementCommand = new PongBallStartMovementCommand(pongBallGO);
             pongBallLeftStartDirectionCommand = new PongBallLeftStartDirectionCommand(pongBallGO);
             pongBallRightStartDirectionCommand = new PongBallRightStartDirectionCommand(pongBallGO);
         }
+
+
         ~PongBallCommandsInvoker()
         {
-
         }
 
         public void InvokePongBallReset()
