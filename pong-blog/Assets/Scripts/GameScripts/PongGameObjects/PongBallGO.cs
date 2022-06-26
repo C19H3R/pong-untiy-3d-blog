@@ -24,7 +24,6 @@ namespace Pong.Game.GameObjects
         public Action<Collision2D> OnPongBallCollisionEnter2D;
 
         private bool  toLeft = false;
-        private Vector2 currentMovementDir = Vector2.zero;
         private float currentSpeed;
 
         PongAudioPlayerService audioPlayer;
@@ -39,31 +38,29 @@ namespace Pong.Game.GameObjects
         public void OnCollisionEnter2D(Collision2D collision)
         {
             GameObject collidingGO = collision.gameObject;
+
             if (collidingGO.CompareTag("PongPaddle"))
             {
                 FlipMovementHorizontally();
-            }
-            else
-            {
-                FlipMovementBasedOnContactNormal(collision.contacts[0].normal);
-            }
 
-
-
-            if (collidingGO.CompareTag("PongPaddle"))
-            {
                 Accelerate();
 
                 audioPlayer.PlaySFX(AudioClipSFX_key.SFX_01_BallHitPaddle);
             }
-            else if (collidingGO.CompareTag("PongGoal"))
+            else 
             {
-                audioPlayer.PlaySFX(AudioClipSFX_key.SFX_03_BallHitGoal);
-            }
-            else
-            {
-                audioPlayer.PlaySFX(AudioClipSFX_key.SFX_02_BallHitWall);
-            }
+                FlipMovementBasedOnContactNormal(collision.contacts[0].normal);
+
+                if (collidingGO.CompareTag("PongGoal"))
+                {
+                    audioPlayer.PlaySFX(AudioClipSFX_key.SFX_03_BallHitGoal);
+                }
+                else
+                {
+                    audioPlayer.PlaySFX(AudioClipSFX_key.SFX_02_BallHitWall);
+                }
+            } 
+
             UpdateVelocity();
 
             OnPongBallCollisionEnter2D?.Invoke(collision);
@@ -73,21 +70,21 @@ namespace Pong.Game.GameObjects
 
         private void FlipMovementVertically()
         {
-            currentMovementDir.y = -currentMovementDir.y;
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, -rigidbody2D.velocity.y);
         }
         private void FlipMovementHorizontally()
         {
-            currentMovementDir.x = -currentMovementDir.x;
+            rigidbody2D.velocity = new Vector2(-rigidbody2D.velocity.x, rigidbody2D.velocity.y);
         }
 
         private void FlipMovementBasedOnContactNormal(Vector2 normal)
         {
-           currentMovementDir =  Vector2.Reflect(currentMovementDir, normal);
+            rigidbody2D.velocity = Vector2.Reflect(rigidbody2D.velocity, normal);
         }
 
         private void UpdateVelocity()
         {
-           rigidbody2D.velocity = currentMovementDir.normalized * currentSpeed;
+           rigidbody2D.velocity = rigidbody2D.velocity.normalized * currentSpeed;
         }
         /// <summary>
         /// to acceletate the speed of the pong ball
@@ -105,7 +102,6 @@ namespace Pong.Game.GameObjects
         {
             rigidbody2D.velocity = Vector2.zero;
             transform.position = Vector3.zero;
-            currentMovementDir = Vector2.zero;
         }
 
         /// <summary>
@@ -117,15 +113,20 @@ namespace Pong.Game.GameObjects
         {
             ResetPosition();
 
-            currentMovementDir = UnityEngine.Random.onUnitSphere.normalized;
-            currentMovementDir.Normalize();
-
             currentSpeed = startSpeed;
 
-            if(toLeft)
-            currentMovementDir.x = 1;
+            rigidbody2D.velocity = UnityEngine.Random.onUnitSphere.normalized;
+            rigidbody2D.velocity = rigidbody2D.velocity.normalized * currentSpeed;
+
+
+            if (toLeft)
+            {
+                rigidbody2D.velocity = rigidbody2D.velocity.x < 0 ? rigidbody2D.velocity:Vector2.Reflect(rigidbody2D.velocity,Vector2.up);
+            }
             else
-            currentMovementDir.x = -1;
+            {
+                rigidbody2D.velocity = rigidbody2D.velocity.x > 0 ? rigidbody2D.velocity : Vector2.Reflect(rigidbody2D.velocity, Vector2.up);
+            }
 
             UpdateVelocity();
         }
@@ -136,6 +137,7 @@ namespace Pong.Game.GameObjects
         {
             toLeft = isToLeft;
         }
+
 
     }
 }
