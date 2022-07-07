@@ -19,7 +19,6 @@ namespace Pong.Services
         static PongAudioPlayerService _pongAudioPlayerService;
 
 
-
         private void Start()
         {
             _pongDataContainerService = pongDataContainerService;

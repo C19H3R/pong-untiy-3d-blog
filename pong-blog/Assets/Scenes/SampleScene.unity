@@ -152,9 +152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9df529f551a6a764587bcfc47245def1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftPLayerScore: {fileID: 1314454101}
-  rightPlayerScore: {fileID: 1173745234}
-  pongHeroText: {fileID: 0}
 --- !u!4 &21528611
 Transform:
   m_ObjectHideFlags: 0
@@ -201,7 +198,7 @@ Transform:
   - {fileID: 242344735}
   - {fileID: 370749484}
   m_Father: {fileID: 1534767315}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &71126014
 GameObject:
@@ -213,7 +210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 71126015}
   m_Layer: 0
-  m_Name: -------UI--------
+  m_Name: </UI>
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +232,7 @@ Transform:
   - {fileID: 1461575090}
   - {fileID: 2138276562}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &181575666
 GameObject:
@@ -315,9 +312,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181575666}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 15, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.75, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 242344735}
@@ -336,7 +333,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.5, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -361,6 +358,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00e67c1d1b5e6243ba5588f97a5e658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballCollisionTag: PongBall
+  untaggetTagged: Untagged
+  spriteRenderer: {fileID: 181575667}
 --- !u!1 &242344734
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,7 +405,9 @@ GameObject:
   - component: {fileID: 345449495}
   - component: {fileID: 345449494}
   - component: {fileID: 345449497}
-  - component: {fileID: 345449498}
+  - component: {fileID: 345449499}
+  - component: {fileID: 345449501}
+  - component: {fileID: 345449502}
   m_Layer: 0
   m_Name: PaddleLeft
   m_TagString: PongPaddle
@@ -454,7 +456,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -436673800, guid: bfd1c03d81d42f7498678c99e8bd2da0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -474,9 +476,11 @@ Transform:
   m_GameObject: {fileID: 345449493}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -8, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 1.25, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1856806754}
+  - {fileID: 1331001118}
   m_Father: {fileID: 650017807}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -492,8 +496,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14f6c0f507026f45a5668a3db78a9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!68 &345449498
-EdgeCollider2D:
+  attachmentTransformContainer:
+  - Type: 0
+    Transform: {fileID: 1331001118}
+  - Type: 1
+    Transform: {fileID: 1856806754}
+  collidingPongBallTag: PongBall
+  spriteRenderer: {fileID: 345449494}
+--- !u!114 &345449499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345449493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029b50e3c80fe344f813dae51b384718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pongGoal: {fileID: 1092630816}
+  pongPaddle: {fileID: 345449497}
+  goalColor: {r: 1, g: 0, b: 0, a: 1}
+  playerName: asdf
+  pongBallTag: PongBall
+  collectableTag: PongCollectable
+  currLives: 5
+--- !u!61 &345449501
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -506,14 +536,32 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.05, y: 0.47}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 0.47}
   m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.5, y: 0.5}
-  - {x: 0.5, y: -0.5}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+--- !u!114 &345449502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345449493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f01647ee3e40842b0fe6aeef2ce037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 638774492}
+  paddle: {fileID: 345449497}
 --- !u!1 &370749483
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +631,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -643,8 +691,8 @@ GameObject:
   - component: {fileID: 638774490}
   - component: {fileID: 638774493}
   - component: {fileID: 638774495}
-  - component: {fileID: 638774496}
   - component: {fileID: 638774492}
+  - component: {fileID: 638774496}
   m_Layer: 0
   m_Name: Pong
   m_TagString: PongBall
@@ -693,7 +741,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 2012955522, guid: bfd1c03d81d42f7498678c99e8bd2da0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -713,7 +761,7 @@ Transform:
   m_GameObject: {fileID: 638774489}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1978255237}
@@ -733,8 +781,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 638774495}
-  startSpeed: 10
+  startSpeed: 5
   buildUpRate: 0
+  TagCommonGO: Untagged
+  TagGoalGO: PongGoal
+  TagPaddleGO: PongPaddle
 --- !u!82 &638774493
 AudioSource:
   m_ObjectHideFlags: 0
@@ -839,7 +890,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638774489}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
@@ -867,7 +918,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.035
 --- !u!1 &650017806
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +951,7 @@ Transform:
   - {fileID: 345449495}
   - {fileID: 769555631}
   m_Father: {fileID: 1534767315}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &769555629
 GameObject:
@@ -913,7 +964,9 @@ GameObject:
   - component: {fileID: 769555631}
   - component: {fileID: 769555630}
   - component: {fileID: 769555633}
-  - component: {fileID: 769555634}
+  - component: {fileID: 769555635}
+  - component: {fileID: 769555638}
+  - component: {fileID: 769555639}
   m_Layer: 0
   m_Name: PaddleRight
   m_TagString: PongPaddle
@@ -962,7 +1015,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -108647687, guid: bfd1c03d81d42f7498678c99e8bd2da0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -980,11 +1033,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769555629}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 1.25, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_LocalScale: {x: 5, y: 5.0000005, z: 5}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1101655375}
+  - {fileID: 1408979000}
   m_Father: {fileID: 650017807}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1000,8 +1055,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b14f6c0f507026f45a5668a3db78a9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!68 &769555634
-EdgeCollider2D:
+  attachmentTransformContainer:
+  - Type: 0
+    Transform: {fileID: 1408979000}
+  - Type: 1
+    Transform: {fileID: 1101655375}
+  collidingPongBallTag: PongBall
+  spriteRenderer: {fileID: 769555630}
+--- !u!114 &769555635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769555629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029b50e3c80fe344f813dae51b384718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pongGoal: {fileID: 181575670}
+  pongPaddle: {fileID: 769555633}
+  goalColor: {r: 0.2971698, g: 0.72300094, b: 1, a: 1}
+  playerName: sadfas
+  pongBallTag: PongBall
+  collectableTag: PongCollectable
+  currLives: 5
+--- !u!61 &769555638
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1014,14 +1095,32 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.05, y: 0.47}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.05, y: 0.47}
   m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.5, y: 0.5}
-  - {x: -0.5, y: -0.5}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+--- !u!114 &769555639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769555629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f01647ee3e40842b0fe6aeef2ce037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ball: {fileID: 638774492}
+  paddle: {fileID: 769555633}
 --- !u!1 &845846063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,7 +1166,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1534767315}
+  m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &845846066
@@ -1174,14 +1273,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1092630812}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 15, z: 1}
+  m_LocalRotation: {x: 0, y: 0.018848477, z: 0, w: 0.9998224}
+  m_LocalPosition: {x: -9.75, y: 0, z: 0.103648216}
+  m_LocalScale: {x: 2.5, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 242344735}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 2.16, z: 0}
 --- !u!61 &1092630815
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1195,7 +1294,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.5, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1220,6 +1319,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00e67c1d1b5e6243ba5588f97a5e658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballCollisionTag: PongBall
+  untaggetTagged: Untagged
+  spriteRenderer: {fileID: 1092630813}
+--- !u!1 &1101655374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1101655375}
+  m_Layer: 0
+  m_Name: DOWN_AttachmentPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1101655375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101655374}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: -0.23499997, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 769555631}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1103952523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,7 +1439,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1601,6 +1734,68 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314454099}
   m_CullTransparentMesh: 1
+--- !u!1 &1331001117
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1331001118}
+  m_Layer: 0
+  m_Name: UP_AttachmentPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1331001118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331001117}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.235, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 345449495}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1408978999
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1408979000}
+  m_Layer: 0
+  m_Name: UP_AttachmentPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1408979000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408978999}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.23499997, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 769555631}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1461575086
 GameObject:
   m_ObjectHideFlags: 0
@@ -1732,11 +1927,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1564083120}
-  - {fileID: 845846065}
   - {fileID: 650017807}
   - {fileID: 64726969}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1564083118
 GameObject:
@@ -1747,9 +1941,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1564083120}
-  - component: {fileID: 1564083119}
-  - component: {fileID: 1564083121}
-  - component: {fileID: 1564083122}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1757,20 +1948,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1564083119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564083118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a86ffc82751e2b1419a75d3c35028857, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ballAndGoalSystem: {fileID: 1564083121}
-  pongUISystem: {fileID: 21528610}
 --- !u!4 &1564083120
 Transform:
   m_ObjectHideFlags: 0
@@ -1786,37 +1963,37 @@ Transform:
   m_Father: {fileID: 1534767315}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1564083121
-MonoBehaviour:
+--- !u!1 &1856806753
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564083118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8827618a87ef38542ba6c3a32840d1e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pongBallGO: {fileID: 638774492}
-  LeftGoalWall: {fileID: 1092630816}
-  RightGoalWall: {fileID: 181575670}
---- !u!114 &1564083122
-MonoBehaviour:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1856806754}
+  m_Layer: 0
+  m_Name: DOWN_AttachmentPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1856806754
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564083118}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1e4b77b8ac6f54f995c6563eff085d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pongPaddleRight: {fileID: 769555629}
-  pongPaddleLeft: {fileID: 345449493}
-  paddleMoveSpeed: 15
-  paddleBounds: 4
+  m_GameObject: {fileID: 1856806753}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.235, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 345449495}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1978255236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,13 +2077,22 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.2307725
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.25383976
+        value: 0.23715791
+        inSlope: 0.036156382
+        outSlope: 0.036156382
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.1390433
       - serializedVersion: 3
         time: 1
         value: 0.07240344
@@ -1921,8 +2107,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0, b: 0, a: 0.25882354}
-      key1: {r: 0.30982515, g: 1, b: 0.16862744, a: 0}
+      key0: {r: 1, g: 0.67000264, b: 0.21226418, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
       key2: {r: 0.49267817, g: 0.39607847, b: 1, a: 0}
       key3: {r: 0.5764706, g: 0.8510874, b: 1, a: 0}
       key4: {r: 1, g: 0.8272578, b: 0, a: 0}
@@ -1930,7 +2116,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 10987
+      ctime1: 49151
       ctime2: 26021
       ctime3: 37779
       ctime4: 47995
@@ -1946,7 +2132,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 6
+      m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
@@ -2017,7 +2203,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2135,3 +2321,72 @@ Transform:
   m_Father: {fileID: 71126015}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1222901118277067324
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.633
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222901117680856239, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+      propertyPath: m_Name
+      value: Square
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}

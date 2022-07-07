@@ -1,21 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pong.Game.Interfaces;
+using Pong.Game.Systems;
 
-public class NewBehaviourScript : MonoBehaviour
+public class NewBehaviourScript : MonoBehaviour,IPongCollectable
 {
-    [SerializeField]
-    MonoBehaviour test;
-    // Start is called before the first frame update
-    void Start()
+
+    public void Collect(PongPlayerSystem pongPlayerSystem)
     {
-        Debug.Log(test.gameObject.name);
+        Debug.Log(pongPlayerSystem.PlayerName);
+        Destroy(gameObject);
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

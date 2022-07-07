@@ -20,78 +20,80 @@ namespace Pong.Game.GameObjects
         [SerializeField]
         [Tooltip("this value adds up every pad collision")]
         float buildUpRate=1f;
+        
+        [SerializeField]
+        [TagSelector]
+        string TagCommonGO;
+        [SerializeField]
+        [TagSelector]
+        string TagGoalGO;
+        [SerializeField]
+        [TagSelector]
+        string TagPaddleGO;
 
-        public Action<Collision2D> OnPongBallCollisionEnter2D;
+        public static Action<PongBallGO, Collider2D> OnPongBallTriggerEnter2D;
+        public static Action<PongBallGO, Collision2D> OnPongBallCollisionEnter2D;
 
-        private bool  toLeft = false;
+
         private float currentSpeed;
+        private Vector2 cachedStartPosition;
+
+        public Vector2 BallStartPosition { get { return cachedStartPosition; } }
+
+        private Vector2 startDirection=Vector2.right+Vector2.up;
+        public Vector2 StartDirection { set { startDirection = value.normalized; } }
+
 
         PongAudioPlayerService audioPlayer;
 
         private void Start()
         {
             audioPlayer = PongServiceLocator.AudioPlayerService;
+
+            cachedStartPosition = transform.position;
         }
 
-
-
-        public void OnCollisionEnter2D(Collision2D collision)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
             GameObject collidingGO = collision.gameObject;
 
-            if (collidingGO.CompareTag("PongPaddle"))
+            if (collidingGO.CompareTag(TagCommonGO))
             {
-                FlipMovementHorizontally();
+                audioPlayer.PlaySFX(AudioClipSFX_key.SFX_02_BallHitWall);
 
-                Accelerate();
-
-                audioPlayer.PlaySFX(AudioClipSFX_key.SFX_01_BallHitPaddle);
+                ReflectOnNormal(collision.contacts[0].normal);
             }
-            else 
+            else if(collidingGO.CompareTag(TagPaddleGO))
             {
-                FlipMovementBasedOnContactNormal(collision.contacts[0].normal);
+                audioPlayer.PlaySFX(AudioClipSFX_key.SFX_01_BallHitPaddle);
 
-                if (collidingGO.CompareTag("PongGoal"))
-                {
-                    audioPlayer.PlaySFX(AudioClipSFX_key.SFX_03_BallHitGoal);
-                }
-                else
-                {
-                    audioPlayer.PlaySFX(AudioClipSFX_key.SFX_02_BallHitWall);
-                }
-            } 
+            }
+            else if (collidingGO.CompareTag(TagGoalGO))
+            {
+                audioPlayer.PlaySFX(AudioClipSFX_key.SFX_03_BallHitGoal);
+            }
 
-            UpdateVelocity();
-
-            OnPongBallCollisionEnter2D?.Invoke(collision);
+            OnPongBallCollisionEnter2D?.Invoke(this, collision);
         }
 
-        
-
-        private void FlipMovementVertically()
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, -rigidbody2D.velocity.y);
-        }
-        private void FlipMovementHorizontally()
-        {
-            rigidbody2D.velocity = new Vector2(-rigidbody2D.velocity.x, rigidbody2D.velocity.y);
-        }
-
-        private void FlipMovementBasedOnContactNormal(Vector2 normal)
-        {
-            rigidbody2D.velocity = Vector2.Reflect(rigidbody2D.velocity, normal);
+            OnPongBallTriggerEnter2D?.Invoke(this,collision);
         }
 
         private void UpdateVelocity()
         {
-           rigidbody2D.velocity = rigidbody2D.velocity.normalized * currentSpeed;
+            rigidbody2D.velocity = rigidbody2D.velocity.normalized * currentSpeed;
+            Debug.Log(rigidbody2D.velocity.magnitude);
         }
+
         /// <summary>
         /// to acceletate the speed of the pong ball
         /// </summary>
-        private void Accelerate()
+        public void Accelerate()
         {
             currentSpeed += buildUpRate;
+            UpdateVelocity();
         }
 
         /// <summary>
@@ -101,43 +103,63 @@ namespace Pong.Game.GameObjects
         public void ResetPosition()
         {
             rigidbody2D.velocity = Vector2.zero;
-            transform.position = Vector3.zero;
+            transform.position = cachedStartPosition;
         }
 
         /// <summary>
         /// To start a movement of ball
         /// </summary>
-        /// <param name="toLeft">bool if to left or right</param>
-        [ContextMenu("Start Random Movement")]
-        public void StartRandomMovement()
+        [ContextMenu("start pong")]
+        public void StartMovement()
         {
             ResetPosition();
 
             currentSpeed = startSpeed;
 
-            rigidbody2D.velocity = UnityEngine.Random.onUnitSphere.normalized;
-            rigidbody2D.velocity = rigidbody2D.velocity.normalized * currentSpeed;
-
-
-            if (toLeft)
-            {
-                rigidbody2D.velocity = rigidbody2D.velocity.x < 0 ? rigidbody2D.velocity:Vector2.Reflect(rigidbody2D.velocity,Vector2.up);
-            }
-            else
-            {
-                rigidbody2D.velocity = rigidbody2D.velocity.x > 0 ? rigidbody2D.velocity : Vector2.Reflect(rigidbody2D.velocity, Vector2.up);
-            }
+            rigidbody2D.velocity = startDirection.normalized * currentSpeed;
 
             UpdateVelocity();
         }
+
         /// <summary>
-        /// To switch left and right direction based on Bool
+        /// Flips motion randomly on invoking on reflecting a normal
         /// </summary>
-        public void TogglePongStartDirection(bool isToLeft)
+        public void RandomReflection(Vector2 normal)
         {
-            toLeft = isToLeft;
+            Vector2 finalDirection,currDirection = rigidbody2D.velocity.normalized;
+            float currentMagnitude =rigidbody2D.velocity.magnitude;
+
+            Vector2 reflectedDirection = normal + currDirection;
+
+            Vector2 vectorOne = normal.normalized;
+            Vector2 vectorTwo = (reflectedDirection - Vector2.Dot(reflectedDirection, normal) * normal.normalized).normalized;
+
+            finalDirection = UnityEngine.Random.value * vectorTwo + UnityEngine.Random.value * vectorOne;
+            finalDirection = finalDirection.normalized;
+            rigidbody2D.velocity = finalDirection.normalized*currentMagnitude;
+
+            UpdateVelocity();
         }
 
+        /// <summary>
+        /// Flips motion perfectly based on a given normal direction
+        /// </summary>
+        /// <param name="normal">normal vector </param>
+        public void ReflectOnNormal(Vector2 normal)
+        {
+            rigidbody2D.velocity = Vector2.Reflect(rigidbody2D.velocity, normal);
+            UpdateVelocity();
+        }
+        /// <summary>
+        /// Reflects the motion of ball in a given direction
+        /// </summary>
+        /// <param name="dir"></param>
+        public void ReflectInDirection(Vector2 dir)
+        {
+            rigidbody2D.velocity = rigidbody2D.velocity.magnitude*dir.normalized;
+
+            UpdateVelocity();
+        }
 
     }
 }
