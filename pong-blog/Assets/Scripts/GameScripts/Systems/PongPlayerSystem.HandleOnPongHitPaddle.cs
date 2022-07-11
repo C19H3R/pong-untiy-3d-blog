@@ -6,7 +6,7 @@ using System;
 using Pong.Game.GameObjects;
 using Pong.Game.GameObjects.Commands;
 using Pong.Game.Interfaces;
-
+using Pong.Utilities;
 
 
 namespace Pong.Game.Systems
@@ -18,7 +18,7 @@ namespace Pong.Game.Systems
             if (pongPaddleGO == pongPaddle)
             {
                 GameObject colliderGameObj = collision.gameObject;
-                if (colliderGameObj.CompareTag(pongBallTag))
+                if (colliderGameObj.CompareTag(PongTagUtility.PongBall))
                 {
                     PongBallGO pongBall = GetPongBallGO(colliderGameObj);
 

@@ -6,7 +6,7 @@ using System;
 using Pong.Game.GameObjects;
 using Pong.Game.GameObjects.Commands;
 using Pong.Game.Interfaces;
-
+using Pong.Utilities;
 
 
 namespace Pong.Game.Systems
@@ -37,7 +37,7 @@ namespace Pong.Game.Systems
             if (pongGoalGo == pongGoal)
             {
                 GameObject colliderGameObj = collision.gameObject;
-                if (colliderGameObj.CompareTag(pongBallTag))
+                if (colliderGameObj.CompareTag(PongTagUtility.PongBall))
                 {
                     if (!pongGoal.IsGoalDisabled)
                     {

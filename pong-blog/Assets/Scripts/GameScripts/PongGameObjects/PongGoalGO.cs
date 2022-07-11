@@ -5,19 +5,15 @@ using System;
 
 using Pong.Services;
 using Pong.Services.AudioServices;
+using Pong.Utilities;
 
 namespace Pong.Game.GameObjects
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class PongGoalGO : MonoBehaviour
     {
-        [TagSelector]
-        [SerializeField]
-        private string ballCollisionTag;
 
-        [TagSelector]
-        [SerializeField]
-        private string untaggetTagged;
+
         [SerializeField]
         private SpriteRenderer spriteRenderer;
 
@@ -42,7 +38,7 @@ namespace Pong.Game.GameObjects
                 if (disabled)
                 {
                     tmpColor.a=0.3f;
-                    gameObject.tag = untaggetTagged;
+                    gameObject.tag = PongTagUtility.Untagged;
                 }
                 else
                 {

@@ -6,7 +6,7 @@ using System;
 using Pong.Game.GameObjects;
 using Pong.Game.GameObjects.Commands;
 using Pong.Game.Interfaces;
-
+using Pong.Utilities;
 
 
 namespace Pong.Game.Systems
@@ -18,7 +18,7 @@ namespace Pong.Game.Systems
             PongPaddleGO lastHitPaddle = GetPongLastHitPaddle(pongBallGO);
             if (lastHitPaddle!=null && pongPaddle==lastHitPaddle)
             {
-                if (collision.gameObject.CompareTag(collectableTag))
+                if (collision.gameObject.CompareTag(PongTagUtility.PongCollectable))
                 {
                     IPongCollectable collectable = collision.gameObject.GetComponent<IPongCollectable>();
 

@@ -8,11 +8,8 @@ namespace Pong.Game.attachments
 {
     public class PongLaserAttachment : PongAttachableBase
     {
-        [SerializeField]
-        GameObject lazer;
         public override void Shoot()
         {
-            lazer.SetActive(true);
         }
     }
 }

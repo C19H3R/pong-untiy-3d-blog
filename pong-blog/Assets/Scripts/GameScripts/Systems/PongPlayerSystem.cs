@@ -33,9 +33,6 @@ namespace Pong.Game.Systems
 
         [SerializeField] private string playerName;
 
-        [SerializeField] [TagSelector] private string pongBallTag;
-        [SerializeField] [TagSelector] private string collectableTag;
-
         [SerializeField] private int currLives;
 
         private static int lifeLimit;

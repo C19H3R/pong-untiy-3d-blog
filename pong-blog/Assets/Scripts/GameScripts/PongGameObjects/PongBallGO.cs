@@ -6,6 +6,7 @@ using System;
 
 using Pong.Services;
 using Pong.Services.AudioServices;
+using Pong.Utilities;
 
 namespace Pong.Game.GameObjects
 {
@@ -20,16 +21,6 @@ namespace Pong.Game.GameObjects
         [SerializeField]
         [Tooltip("this value adds up every pad collision")]
         float buildUpRate=1f;
-        
-        [SerializeField]
-        [TagSelector]
-        string TagCommonGO;
-        [SerializeField]
-        [TagSelector]
-        string TagGoalGO;
-        [SerializeField]
-        [TagSelector]
-        string TagPaddleGO;
 
         public static Action<PongBallGO, Collider2D> OnPongBallTriggerEnter2D;
         public static Action<PongBallGO, Collision2D> OnPongBallCollisionEnter2D;
@@ -57,18 +48,18 @@ namespace Pong.Game.GameObjects
         {
             GameObject collidingGO = collision.gameObject;
 
-            if (collidingGO.CompareTag(TagCommonGO))
+            if (collidingGO.CompareTag(PongTagUtility.Untagged))
             {
                 audioPlayer.PlaySFX(AudioClipSFX_key.SFX_02_BallHitWall);
 
                 ReflectOnNormal(collision.contacts[0].normal);
             }
-            else if(collidingGO.CompareTag(TagPaddleGO))
+            else if(collidingGO.CompareTag(PongTagUtility.PongPaddle))
             {
                 audioPlayer.PlaySFX(AudioClipSFX_key.SFX_01_BallHitPaddle);
 
             }
-            else if (collidingGO.CompareTag(TagGoalGO))
+            else if (collidingGO.CompareTag(PongTagUtility.PongGoal))
             {
                 audioPlayer.PlaySFX(AudioClipSFX_key.SFX_03_BallHitGoal);
             }

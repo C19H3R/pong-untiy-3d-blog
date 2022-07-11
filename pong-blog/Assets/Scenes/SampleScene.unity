@@ -358,8 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00e67c1d1b5e6243ba5588f97a5e658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballCollisionTag: PongBall
-  untaggetTagged: Untagged
   spriteRenderer: {fileID: 181575667}
 --- !u!1 &242344734
 GameObject:
@@ -519,8 +517,6 @@ MonoBehaviour:
   pongPaddle: {fileID: 345449497}
   goalColor: {r: 1, g: 0, b: 0, a: 1}
   playerName: asdf
-  pongBallTag: PongBall
-  collectableTag: PongCollectable
   currLives: 5
 --- !u!61 &345449501
 BoxCollider2D:
@@ -783,9 +779,6 @@ MonoBehaviour:
   rigidbody2D: {fileID: 638774495}
   startSpeed: 5
   buildUpRate: 0
-  TagCommonGO: Untagged
-  TagGoalGO: PongGoal
-  TagPaddleGO: PongPaddle
 --- !u!82 &638774493
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1078,8 +1071,6 @@ MonoBehaviour:
   pongPaddle: {fileID: 769555633}
   goalColor: {r: 0.2971698, g: 0.72300094, b: 1, a: 1}
   playerName: sadfas
-  pongBallTag: PongBall
-  collectableTag: PongCollectable
   currLives: 5
 --- !u!61 &769555638
 BoxCollider2D:
@@ -1133,6 +1124,7 @@ GameObject:
   - component: {fileID: 845846064}
   - component: {fileID: 845846067}
   - component: {fileID: 845846066}
+  - component: {fileID: 845846068}
   m_Layer: 0
   m_Name: ServiceLocator
   m_TagString: Untagged
@@ -1195,6 +1187,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxAudioSource: {fileID: 638774493}
+--- !u!114 &845846068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845846063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6be8ba894de47e47a1773ac1dab4a9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  untagged: Untagged
+  respawn: Respawn
+  finish: Finish
+  editorOnly: EditorOnly
+  mainCamera: MainCamera
+  player: Player
+  gameController: GameController
+  pongPaddle: PongPaddle
+  pongBall: PongBall
+  pongGoal: PongGoal
+  pongCollectable: PongCollectable
 --- !u!1 &1092630812
 GameObject:
   m_ObjectHideFlags: 0
@@ -1319,8 +1334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00e67c1d1b5e6243ba5588f97a5e658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballCollisionTag: PongBall
-  untaggetTagged: Untagged
   spriteRenderer: {fileID: 1092630813}
 --- !u!1 &1101655374
 GameObject:
@@ -2333,18 +2346,6 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3.23
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222901117680856233, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.633
       objectReference: {fileID: 0}
@@ -2386,7 +2387,64 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1222901117680856239, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
       propertyPath: m_Name
-      value: Square
+      value: PortalGunPickup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7e322771970d5a44bf3e23b998a2b1c, type: 3}
+--- !u!1001 &6127230309698818204
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.633
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.5899999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572961, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8398813267634572967, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
+      propertyPath: m_Name
+      value: LazerGunPickup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 332e9d0bd8afbe14a8f9f492aefc582a, type: 3}
